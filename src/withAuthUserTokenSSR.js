@@ -118,7 +118,7 @@ const withAuthUserTokenSSR =
       }
     }
 
-    if (AuthUser.id && emailVerified === false) {
+    if (AuthUser.id && emailVerified === true && AuthUser.emailVerified === false) {
       const authRedirectDestination = authPageURL || getConfig().authPageURL
       if (!authRedirectDestination) {
         throw new Error(

@@ -96,17 +96,19 @@ const createAuthUser = ({
   let getIdTokenFunc = async () => null
 
   // When not on the client side, the "signOut" method is a noop.
-  let firebase
-  if (isClientSide()) {
-    // eslint-disable-next-line global-require
-    require('firebase/auth')
-    // eslint-disable-next-line global-require
-    firebase = require('firebase/app').default
-  }
-  let signOut = async () => {}
+  let signOutFunc = async () => {}
 
   let tokenString = null // used for serialization
   if (firebaseUserClientSDK) {
+    if (isClientSide()) {
+      // eslint-disable-next-line global-require
+      const { getApp } = require('firebase/app')
+      // eslint-disable-next-line global-require
+      const { getAuth, signOut } = require('firebase/auth')
+
+      signOutFunc = async () => signOut(getAuth(getApp()))
+    }
+
     /**
      * Claims are injected client side through the onTokenChange Callback
      */
@@ -117,20 +119,7 @@ const createAuthUser = ({
     phoneNumber = firebaseUserClientSDK.phoneNumber
     displayName = firebaseUserClientSDK.displayName
     photoURL = firebaseUserClientSDK.photoURL
-
-    /**
-     * Returns a JSON Web Token (JWT) used to identify the user to a Firebase
-     * service.
-     *
-     * Returns the current token if it has not expired. Otherwise, this will
-     * refresh the token and return a new one.
-     *
-     * @param forceRefresh Force refresh regardless of token
-     *     expiration.
-     */
-    getIdTokenFunc = async (forceRefresh) =>
-      firebaseUserClientSDK.getIdToken(forceRefresh)
-    signOut = async () => firebase.auth().signOut()
+    getIdTokenFunc = async () => firebaseUserClientSDK.getIdToken()
     tokenString = null
   } else if (firebaseUserAdminSDK) {
     /**
@@ -185,7 +174,7 @@ const createAuthUser = ({
     // The "signOut" method is a noop when the Firebase JS SDK has not
     // initialized. Otherwise, it is the SDK's "signOut" method:
     // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signout
-    signOut,
+    signOut: signOutFunc,
     serialize: ({ includeToken = true } = {}) =>
       JSON.stringify({
         id: userId,

@@ -22,6 +22,7 @@ const withAuthUserTokenSSR = (options) =>
 const withAuthUserSSR = (options) =>
   withAuthUserTokenSSRModule(options, { useToken: false })
 
+
 const withAuthUserSSREmailVerified = (options) => withAuthUserTokenSSRModule(options, { emailVerified: true, useToken: false })
 
 const withAuthUserTokenSSREmailVerified = (options) =>
