@@ -39,7 +39,7 @@ const withAuthUserTokenSSR =
       appPageURL = null,
       authPageURL = null,
     } = {},
-    { useToken = true } = {}
+    { useToken = true, emailVerified = false } = {}
   ) =>
   (getServerSidePropsFunc) =>
   async (ctx) => {
@@ -93,6 +93,32 @@ const withAuthUserTokenSSR =
 
     // If specified, redirect to the login page if the user is unauthed.
     if (!AuthUser.id && whenUnauthed === AuthAction.REDIRECT_TO_LOGIN) {
+      const authRedirectDestination = authPageURL || getConfig().authPageURL
+      if (!authRedirectDestination) {
+        throw new Error(
+          `When "whenUnauthed" is set to AuthAction.REDIRECT_TO_LOGIN, "authPageURL" must be set.`
+        )
+      }
+      const destination =
+        typeof authRedirectDestination === 'string'
+          ? authRedirectDestination
+          : authRedirectDestination({ ctx, AuthUser })
+
+      if (!destination) {
+        throw new Error(
+          'The "authPageURL" must be set to a non-empty string or resolve to a non-empty string'
+        )
+      }
+
+      return {
+        redirect: {
+          destination,
+          permanent: false,
+        },
+      }
+    }
+
+    if (AuthUser.id && emailVerified === false) {
       const authRedirectDestination = authPageURL || getConfig().authPageURL
       if (!authRedirectDestination) {
         throw new Error(

@@ -22,13 +22,20 @@ const withAuthUserTokenSSR = (options) =>
 const withAuthUserSSR = (options) =>
   withAuthUserTokenSSRModule(options, { useToken: false })
 
+const withAuthUserSSREmailVerified = (options) => withAuthUserTokenSSRModule(options, { emailVerified: true, useToken: false })
+
+const withAuthUserTokenSSREmailVerified = (options) =>
+  withAuthUserTokenSSRModule(options, { useToken: true, emailVerified: true })
+
 const getFirebaseAdmin = () => initFirebaseAdminSDK()
 
 export default {
   ...index,
   init: initServer,
   withAuthUserSSR,
+  withAuthUserSSREmailVerified,
   withAuthUserTokenSSR,
+  withAuthUserTokenSSREmailVerified,
   setAuthCookies,
   unsetAuthCookies,
   verifyIdToken,

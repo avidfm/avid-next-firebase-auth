@@ -30,6 +30,14 @@ const withAuthUserTokenSSR = () => {
   throw new Error('"withAuthUserTokenSSR" can only be called server-side.')
 }
 
+const withAuthUserTokenSSREmailVerified = () => {
+  throw new Error('"withAuthUserTokenSSREmailVerified" can only be called server-side.')
+}
+
+const withAuthUserSSREmailVerified = () => {
+  throw new Error('"withAuthUserSSREmailVerified" can only be called server-side.')
+}
+
 const setAuthCookies = () => {
   throw new Error('"setAuthCookies" can only be called server-side.')
 }
@@ -50,7 +58,9 @@ export default {
   withAuthUser,
   useAuthUser,
   withAuthUserSSR,
+  withAuthUserSSREmailVerified,
   withAuthUserTokenSSR,
+  withAuthUserTokenSSREmailVerified,
   setAuthCookies,
   unsetAuthCookies,
   verifyIdToken,
