@@ -122,6 +122,7 @@ const withAuthUserTokenSSR =
 
       // Check for email verified here
     }
+    
     // If specified, redirect to the app page if the user is authed.
     if (AuthUser.id && whenAuthed === AuthAction.REDIRECT_TO_APP) {
       const appRedirectDestination = appPageURL || getConfig().appPageURL
