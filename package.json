@@ -1,6 +1,6 @@
 {
-  "name": "next-firebase-auth",
-  "version": "0.13.4",
+  "name": "avidfm/next-firebase-auth",
+  "version": "1.0.0",
   "description": "Simple Firebase authentication for all Next.js rendering strategies",
   "keywords": [
     "Next",
@@ -14,7 +14,7 @@
   "main": "build/index.node.js",
   "types": "build/index.d.ts",
   "repository": "git@github.com:avidfm/next-firebase-auth.git",
-  "author": "Gladly Team",
+  "author": "AVIDFM",
   "license": "MIT",
   "scripts": {
     "build": "npm-run-all -s build:clean build:src",
