@@ -145,7 +145,21 @@ export const withAuthUserTokenSSR: (options?: {
   authPageURL?: PageURL
 }) => (propGetter?: SSRPropGetter) => ReturnType<SSRPropGetter>
 
+export const withAuthUserTokenSSREmailVerified: (options?: {
+  whenAuthed?: AuthAction.RENDER | AuthAction.REDIRECT_TO_APP
+  whenUnauthed?: AuthAction.RENDER | AuthAction.REDIRECT_TO_LOGIN
+  appPageURL?: PageURL
+  authPageURL?: PageURL
+}) => (propGetter?: SSRPropGetter) => ReturnType<SSRPropGetter>
+
 export const withAuthUserSSR: (options?: {
+  whenAuthed?: AuthAction.RENDER | AuthAction.REDIRECT_TO_APP
+  whenUnauthed?: AuthAction.RENDER | AuthAction.REDIRECT_TO_LOGIN
+  appPageURL?: PageURL
+  authPageURL?: PageURL
+}) => (propGetter?: SSRPropGetter) => ReturnType<SSRPropGetter>
+
+export const withAuthUserSSREmailVerified: (options?: {
   whenAuthed?: AuthAction.RENDER | AuthAction.REDIRECT_TO_APP
   whenUnauthed?: AuthAction.RENDER | AuthAction.REDIRECT_TO_LOGIN
   appPageURL?: PageURL
